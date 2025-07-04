@@ -1,6 +1,6 @@
 {
   "Problem name": "J1-J2 U=5",
-  "N": 50,
+  "N": "hello",
   "time": 45.2,
   "architecture": "2 x 8 x A100",
   "doi": "10.1000/xyz123",
