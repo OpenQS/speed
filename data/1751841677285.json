@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "name": "Heisenberg",
+    "Lattice": {
+      "name": "Chain",
+      "L": 12,
+      "pbc": true
+    }
+  },
+  "N": 12,
+  "time": 42,
+  "architecture": "GPU:MI300X",
+  "doi": "10.1103/PhysRevLett.122.250503",
+  "extra": null
+}
