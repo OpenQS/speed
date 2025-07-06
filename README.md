@@ -10,3 +10,4 @@ This is the Source of Truth of what is valid inputs to our database.
 
 - Under `website` some stuff to autogenerate a website.
     - Run `npm run preview` to preview.
+    - Data submission is working at [https://openqs.github.io/speed/](https://openqs.github.io/speed/).
