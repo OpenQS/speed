@@ -1,3 +1,8 @@
+schema.json
+.DS_Store
+node_modules/
+website/docs/assets/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

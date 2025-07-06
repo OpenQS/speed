@@ -1,0 +1,25 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "schema:generate": "uv run generate_scheme --output src/schema.json",
+    "dev": "npm run schema:generate && vite",
+    "build": "npm run schema:generate && vite build",
+    "preview": "npm run schema:generate && vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@rjsf/core": "^5.24.12",
+    "@rjsf/validator-ajv8": "^5.24.12",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.6.0",
+    "vite": "^7.0.2"
+  }
+}
