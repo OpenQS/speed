@@ -79,15 +79,18 @@ function App() {
   };
 
   return (
-    <div className="p-4">
-      <h1>OpenQS Speed Benchmark Submission</h1>
+    <div className="rjsf">
       <Form 
         schema={schema} 
         uiSchema={uiSchema}
         validator={validator} 
         onSubmit={onSubmit} 
       />
-      {status && <p className="mt-4">{status}</p>}
+      {status && (
+        <div className="alert alert-info">
+          <strong>Success!</strong> {status}
+        </div>
+      )}
     </div>
   );
 }
