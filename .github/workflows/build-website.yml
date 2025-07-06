@@ -30,6 +30,8 @@ jobs:
         with:
           node-version: '22.x'
           cache: 'npm'
+          cache-dependency-path: website/package-lock.json
+
 
       - name: Install Node.js dependencies
         working-directory: ./website
