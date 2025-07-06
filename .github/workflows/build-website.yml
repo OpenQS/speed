@@ -9,12 +9,14 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true  # makes sure the token can be used for pushes
 
       - name: Set up uv and Python
         uses: astral-sh/setup-uv@v5
