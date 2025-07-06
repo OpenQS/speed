@@ -1,7 +1,7 @@
 schema.json
 .DS_Store
 node_modules/
-docs/assets/
+website/docs/assets/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
