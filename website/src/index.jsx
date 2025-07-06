@@ -9,7 +9,7 @@ function App() {
 
   const onSubmit = ({ formData }) => {
     try {
-      const repo = 'your-org/your-repo';
+      const repo = 'OpenQS/speed';
       const branchName = `auto-branch-${Date.now()}`;
       const filename = `data/${Date.now()}.json`;
       const content = encodeURIComponent(JSON.stringify(formData, null, 2));
