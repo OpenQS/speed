@@ -23,7 +23,7 @@ The goal is that every data point submitted should have the 'problem' descriptio
 
 It should also be possible to submit a single json file with two lists "time" and "V", which contain the time series of the vscore as a function of wallclock time.
 
-We also store and validate possible compute architectures (A100, H100, GH200...) and we should curate a short list.
+We also store and validate possible compute architectures with a predefined list of common hardware (GPU:A100, GPU:H100, CPU:i7-14100, etc.) while allowing users to specify custom architectures.
 
 The problem description is defined by a lattice (chain, square, pyrochlore...) and an hamiltonian with its parameters.
  
@@ -265,6 +265,12 @@ cd website && npm run preview
 2. Update `Lattice` union type
 3. Regenerate schema: `npm run schema:generate`
 4. Forms automatically include new lattice type
+
+### Adding New Architecture Type
+1. Add new architecture to `Architecture` enum in `schema/schema.py`
+2. Follow the format: `DEVICE_MODEL = "DEVICE:MODEL"` (e.g., `GPU_RTX5090 = "GPU:RTX5090"`)
+3. Regenerate schema: `npm run schema:generate`
+4. Forms automatically include new architecture in dropdown
 
 ## Best Practices
 

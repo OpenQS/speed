@@ -7,7 +7,70 @@ import schema from './schema.json';
 function App() {
   const [status, setStatus] = React.useState(null);
 
-  // UI Schema to hide name fields that are auto-populated
+  // Custom widget for architecture selection
+  const ArchitectureWidget = (props) => {
+    const { value, onChange, options } = props;
+    const [isCustom, setIsCustom] = React.useState(false);
+    const [customValue, setCustomValue] = React.useState('');
+
+    const predefinedArchitectures = schema.properties.architecture.examples || [];
+    
+    React.useEffect(() => {
+      if (value && !predefinedArchitectures.includes(value)) {
+        setIsCustom(true);
+        setCustomValue(value);
+      } else if (value && predefinedArchitectures.includes(value)) {
+        setIsCustom(false);
+        setCustomValue('');
+      }
+    }, [value]);
+
+    const handleSelectChange = (event) => {
+      const selectedValue = event.target.value;
+      if (selectedValue === 'custom') {
+        setIsCustom(true);
+        onChange(customValue || '');
+      } else {
+        setIsCustom(false);
+        onChange(selectedValue);
+      }
+    };
+
+    const handleCustomChange = (event) => {
+      const newValue = event.target.value;
+      setCustomValue(newValue);
+      onChange(newValue);
+    };
+
+    return (
+      <div className="architecture-widget">
+        <label className="form-label">Architecture</label>
+        <select 
+          className="form-select mb-2"
+          value={isCustom ? 'custom' : (value || '')}
+          onChange={handleSelectChange}
+        >
+          <option value="">Select an architecture...</option>
+          {predefinedArchitectures.map(arch => (
+            <option key={arch} value={arch}>{arch}</option>
+          ))}
+          <option value="custom">Other (specify below)</option>
+        </select>
+        
+        {isCustom && (
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter custom architecture (e.g., GPU:RTX4060, CPU:M4-Pro)"
+            value={customValue}
+            onChange={handleCustomChange}
+          />
+        )}
+      </div>
+    );
+  };
+
+  // UI Schema to hide name fields that are auto-populated and use custom architecture widget
   const uiSchema = {
     problem: {
       name: {
@@ -18,6 +81,9 @@ function App() {
           'ui:widget': 'hidden'
         }
       }
+    },
+    architecture: {
+      'ui:widget': 'ArchitectureWidget'
     }
   };
 
@@ -78,11 +144,17 @@ function App() {
     }
   };
 
+  // Custom widgets
+  const widgets = {
+    ArchitectureWidget: ArchitectureWidget
+  };
+
   return (
     <div className="rjsf">
       <Form 
         schema={schema} 
         uiSchema={uiSchema}
+        widgets={widgets}
         validator={validator} 
         onSubmit={onSubmit} 
       />
