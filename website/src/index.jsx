@@ -7,8 +7,55 @@ import schema from './schema.json';
 function App() {
   const [status, setStatus] = React.useState(null);
 
+  // UI Schema to hide name fields that are auto-populated
+  const uiSchema = {
+    problem: {
+      name: {
+        'ui:widget': 'hidden'
+      },
+      Lattice: {
+        name: {
+          'ui:widget': 'hidden'
+        }
+      }
+    }
+  };
+
+  // Transform form data before submission to ensure names are correctly set
   const onSubmit = ({ formData }) => {
     try {
+      // Ensure the problem name matches the selected problem type
+      if (formData.problem && !formData.problem.name) {
+        // Get the problem type from the schema discriminator
+        const problemTypes = {
+          'HeisenbergProblem': 'Heisenberg',
+          'J1J2Problem': 'J1J2',
+          'HubbardProblem': 'Hubbard',
+          'IsingProblem': 'Ising'
+        };
+        
+        // Find which problem type this is based on the properties
+        for (const [typeName, displayName] of Object.entries(problemTypes)) {
+          if (schema.$defs[typeName]) {
+            formData.problem.name = displayName;
+            break;
+          }
+        }
+      }
+
+      // Ensure lattice name is set
+      if (formData.problem?.Lattice && !formData.problem.Lattice.name) {
+        const latticeTypes = ['Chain', 'Square', 'Rectangular', 'Triangular', 'Kagome', 'Honeycomb', 'Cubic'];
+        
+        // Try to infer lattice type from properties
+        for (const latticeName of latticeTypes) {
+          if (schema.$defs[latticeName]) {
+            formData.problem.Lattice.name = latticeName;
+            break;
+          }
+        }
+      }
+
       const repo = 'OpenQS/speed';
       const branchName = `auto-branch-${Date.now()}`;
       const filename = `data/${Date.now()}.json`;
@@ -33,7 +80,13 @@ function App() {
 
   return (
     <div className="p-4">
-      <Form schema={schema} validator={validator} onSubmit={onSubmit} />
+      <h1>OpenQS Speed Benchmark Submission</h1>
+      <Form 
+        schema={schema} 
+        uiSchema={uiSchema}
+        validator={validator} 
+        onSubmit={onSubmit} 
+      />
       {status && <p className="mt-4">{status}</p>}
     </div>
   );
